@@ -10,7 +10,7 @@ class BoatListener: Listener {
 
     @EventHandler
     fun onBoatCollide(event: EntityChangeBlockEvent){
-        if(event.entityType != EntityType.BOAT) return
+        if(!event.entityType.name.contains("BOAT")) return
         if(event.block.type != Material.LILY_PAD) return
 
         event.isCancelled = true

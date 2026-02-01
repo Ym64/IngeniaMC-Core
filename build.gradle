@@ -8,13 +8,16 @@ plugins {
     id "idea"
     id "java-library"
     id "maven-publish"
-    id "io.papermc.paperweight.userdev" version "1.7.1"
-    id "xyz.jpenilla.run-paper" version "2.2.2" // Adds runServer and runMojangMappedServer tasks for testing
+    id "io.papermc.paperweight.userdev" version "2.0.0-beta.19"
     id "org.jetbrains.kotlin.jvm" version "1.9.22"
     id "com.gradleup.shadow" version "8.3.0"
 }
 
 repositories {
+    flatDir {
+        dirs 'libs'
+    }
+
     mavenCentral()
     gradlePluginPortal()
     maven {
@@ -53,24 +56,33 @@ repositories {
     maven {
         url = uri("https://maven.evokegames.gg/snapshots")
     }
+    maven {
+        url = uri("https://maven.pvphub.me/tofaa")
+    }
+    maven {
+        url = uri("https://maven.enginehub.org/repo/")
+    }
 }
 
 dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
-    api "net.kyori:adventure-text-minimessage:4.14.0"
+    api "net.kyori:adventure-text-minimessage:4.26.1"
     api "org.joml:joml:1.10.5"
     api "org.apache.commons:commons-math3:3.6.1"
 
     compileOnly "com.bergerkiller.bukkit:TrainCarts:1.20.4-v1-SNAPSHOT"
     compileOnly "com.bergerkiller.bukkit:TCCoasters:1.20.4-v1-SNAPSHOT"
-    compileOnly "com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.8.2"
-    compileOnly "com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.8.2"
-    compileOnly 'com.github.Mindgamesnl.OpenAudioMc:openaudiomc-api:6.10.1'
+
+    implementation(platform("com.intellectualsites.bom:bom-newest:1.55")) // Ref: https://github.com/IntellectualSites/bom
+    compileOnly "com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.15.0"
+    compileOnly "com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.15.0"
+
+    compileOnly name: 'openaudiomc-api'
     compileOnly 'com.ticxo.modelengine:ModelEngine:R4.0.4'
     compileOnly 'com.comphenix.protocol:ProtocolLib:4.7.0'
-    compileOnly 'me.m56738:easyarmorstands-api:2.3.0'
+    compileOnly 'me.m56738:easyarmorstands-api:2.6.1'
 
-    shadow "me.m56738:SmoothCoastersAPI:1.10"
+    shadow "me.m56738:SmoothCoastersAPI:1.11"
     shadow "com.opencsv:opencsv:5.9"
     shadow "com.jeff-media:custom-block-data:2.2.2"
     shadow 'org.jsoup:jsoup:1.17.2'
@@ -80,18 +92,18 @@ dependencies {
 
     // Dependencies which need to be updated frequently
     shadow 'com.github.retrooper:packetevents-spigot:2.5.0'
-    shadow 'me.tofaa.entitylib:spigot:2.4.9-SNAPSHOT'
+    implementation("com.github.Tofaa2:EntityLib:2.4.11")
 
     implementation "net.dv8tion:JDA:5.0.0-beta.23" // "Shadowed" via plugin libraries in the plugin.yml
     implementation 'org.springframework:spring-expression:6.0.12'
     implementation 'club.minnced:jda-ktx:0.11.0-beta.20'
     implementation 'com.github.M64DiamondStar:EffectMaster:1.4.1'
 
-    paperweight.paperDevBundle "1.21.1-R0.1-SNAPSHOT"
+    paperweight.paperDevBundle "1.21.11-R0.1-SNAPSHOT"
 }
 
 group = "me.m64diamondstar"
-version = "1.21.1-R0.1-SNAPSHOT"
+version = "1.21.11-R0.1-SNAPSHOT"
 description = "IngeniaMC-Core"
 java.sourceCompatibility = JavaVersion.VERSION_21
 //paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.MOJANG_PRODUCTION
@@ -126,7 +138,7 @@ tasks {
                 "name": project.name,
                 "version": project.version,
                 "description": project.description,
-                "apiVersion": "1.20"
+                "apiVersion": "1.21"
         ]
         inputs.properties(props)
         filesMatching("plugin.yml") {

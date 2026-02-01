@@ -102,7 +102,7 @@ class Cloak: Wand {
                         0.0
                     )
                     player.inventory.heldItemSlot = 5
-                    player.inventory.setArmorContents(armorInv[player])
+                    player.inventory.armorContents = armorInv[player] ?: emptyArray<ItemStack>()
                     player.walkSpeed = 0.2f
                     Bukkit.getScheduler().cancelTask(s2)
                     this.cancel()

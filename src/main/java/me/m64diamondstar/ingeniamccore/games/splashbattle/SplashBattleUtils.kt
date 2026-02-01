@@ -84,7 +84,7 @@ object SplashBattleUtils {
         player.sendMessage(Colors.format(MessageType.PLAYER_UPDATE + "Use '/leave' to leave this game."))
         player.inventory.clear()
         player.gameMode = GameMode.ADVENTURE
-        player.getAttribute(Attribute.GENERIC_MAX_HEALTH)!!.baseValue = 10.0
+        player.getAttribute(Attribute.MAX_HEALTH)!!.baseValue = 10.0
         giveItems(player)
 
         val runnable = Bukkit.getScheduler().scheduleSyncRepeatingTask(IngeniaMC.plugin, Runnable {
@@ -122,7 +122,7 @@ object SplashBattleUtils {
             player.gameMode = playerGamemode[player]!!
 
         // Reset Health
-        player.getAttribute(Attribute.GENERIC_MAX_HEALTH)!!.baseValue = 20.0
+        player.getAttribute(Attribute.MAX_HEALTH)!!.baseValue = 20.0
         player.health = 20.0
 
         // Remove player from lists and maps

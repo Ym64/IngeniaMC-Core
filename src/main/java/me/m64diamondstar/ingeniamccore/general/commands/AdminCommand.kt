@@ -24,6 +24,7 @@ import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minecraft.core.BlockPos
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.entity.SkullBlockEntity
 import org.bukkit.Bukkit
 import org.bukkit.Color
@@ -144,7 +145,7 @@ class AdminCommand: CommandExecutor {
                 sender.sendMessage(Colors.format(MessageType.ERROR + "You haven't even teleported yet..."))
                 return false
             }
-            sender.teleport(player.previousLocation!!, TeleportFlag.EntityState.RETAIN_PASSENGERS)
+            sender.teleport(player.previousLocation!!)
             sender.sendMessage(Colors.format(MessageType.SUCCESS + "* poof *"))
         }
 
@@ -165,9 +166,6 @@ class AdminCommand: CommandExecutor {
         if(args[0].equals("spawnRandomPresent", ignoreCase = true)){
             val block = sender.location.block
             block.type = Material.PLAYER_HEAD
-
-            val tileEntitySkull = (block.world as CraftWorld).handle.getBlockEntity(BlockPos(block.x, block.y, block.z), true) as SkullBlockEntity
-            //tileEntitySkull.setOwner(Items.getRandomPresentProfile())
 
             val faces = BlockFace.values().toMutableList()
             faces.remove(BlockFace.DOWN)
